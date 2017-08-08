@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, Dimensions, Button, Image } from 'react-native';
+import { View, Text, ScrollView, Dimensions, Button, Image, Animated } from 'react-native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 class Slides extends Component {
+    scrollX = new Animated.Value(0);
+
     renderLastSlide(index) {
         if (index === this.props.data.length - 1) {
             return (
@@ -37,15 +39,43 @@ class Slides extends Component {
         });
     }
 
+    renderDots() {
+        let position = Animated.divide(this.scrollX, SCREEN_WIDTH);
+
+        return this.props.data.map((slide, index) => {
+            let opacity = position.interpolate({
+                inputRange: [index - 1, index, index + 1],
+                outputRange: [0.3, 1, 0.3],
+                extrapolate: 'clamp'
+            });
+            return (
+                <Animated.View
+                    key={index}
+                    style={{ opacity, height: 10, width: 10, backgroundColor: '#595959', margin: 8, borderRadius:  5 }}
+                />
+            )
+        });
+    }
+
     render() {
         return (
-            <ScrollView
-                horizontal
-                pagingEnabled
-                style={styles.containerStyle}
-            >
-                {this.renderSlides()}
-            </ScrollView>
+            <View style={{ flex: 1 }}>
+                <ScrollView
+                    horizontal
+                    pagingEnabled
+                    style={styles.containerStyle}
+                    showsHorizontalScrollIndicator={false}
+                    onScroll={Animated.event (
+                        [{ nativeEvent: { contentOffset: { x: this.scrollX }}}]
+                    )}
+                    scrollEventThrottle={16}
+                >
+                    {this.renderSlides()}
+                </ScrollView>
+                <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 110 }}>
+                    {this.renderDots()}
+                </View>
+            </View>
         )
     }
 }
@@ -60,7 +90,8 @@ const styles = {
         alignItems: 'center',
         width: SCREEN_WIDTH - 60,
         marginLeft: 30,
-        marginRight: 30
+        marginRight: 30,
+        marginTop: 80
     },
     textStyle: {
         fontSize: 30,
