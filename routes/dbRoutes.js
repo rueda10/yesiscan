@@ -25,11 +25,21 @@ router.get('/api/users/:id', function(req, res) {
 router.post('/api/users', function(req, res) {
     const facebook_id = req.body.facebook_id;
 
-    User.create({ facebook_id }, function(err, doc) {
+    User.findOne({ facebook_id }).exec(function(err, doc) {
         if (err) {
             res.send('');
         } else {
-            res.send(doc._id);
+            if (doc) {
+                res.send(doc._id);
+            } else {
+                User.create({ facebook_id }, function(err, doc) {
+                    if (err) {
+                        res.send('');
+                    } else {
+                        res.send(doc._id);
+                    }
+                });
+            }
         }
     });
 });

@@ -4,8 +4,9 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
     facebook_id: {
-       type: String,
-       required: true
+        type: String,
+        required: true,
+        unique: true
     },
     lists: [{
         type: Schema.Types.ObjectId,

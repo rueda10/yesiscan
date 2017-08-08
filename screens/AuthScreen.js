@@ -16,7 +16,7 @@ class AuthScreen extends Component {
     }
 
     onAuthComplete(props) {
-        if (props.token) {
+        if (props.token && props.facebook_id) {
             this.props.navigation.navigate('lists');
         }
     }
@@ -29,7 +29,10 @@ class AuthScreen extends Component {
 }
 
 function mapStateToProps({ auth }) {
-    return { token: auth.token };
+    return {
+        token: auth.token,
+        facebook_id: auth.facebook_id
+    };
 }
 
 export default connect(mapStateToProps, { facebookLogin })(AuthScreen);

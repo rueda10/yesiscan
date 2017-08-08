@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { View, AsyncStorage } from 'react-native';
 import { AppLoading } from 'expo';
 import _ from 'lodash';
+import { connect } from 'react-redux';
+
+import { getFacebookId } from '../actions';
 
 import Slides from '../components/Slides';
 
@@ -27,10 +30,11 @@ class WelcomeScreen extends Component {
     state = { token: null }
 
     async componentWillMount() {
-        AsyncStorage.removeItem('fb_token');
+        // AsyncStorage.removeItem('fb_token');
         let token = await AsyncStorage.getItem('fb_token');
 
         if (token) {
+            await this.props.getFacebookId(token);
             this.setState({ token });
             this.props.navigation.navigate('lists');
         } else {
@@ -55,4 +59,4 @@ class WelcomeScreen extends Component {
     }
 }
 
-export default WelcomeScreen;
+export default connect(null, { getFacebookId })(WelcomeScreen);

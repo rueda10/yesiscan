@@ -11,12 +11,32 @@ export const facebookLogin = () => async (dispatch) => {
 
     if (token) {
         // Dispatch an action saying FB login is done
-        dispatch({ type: FACEBOOK_LOGIN_SUCCESS, payload: token });
+        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+        const facebook_id = (await response.json()).id;
+
+        const payload = {
+            token,
+            facebook_id
+        }
+
+        dispatch({ type: FACEBOOK_LOGIN_SUCCESS, payload });
     } else {
         // start up FB login process
         doFacebookLogin(dispatch);
     }
 };
+
+export const getFacebookId = (token) => async (dispatch) => {
+    const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+    const facebook_id = (await response.json()).id;
+
+    const payload = {
+        token,
+        facebook_id
+    }
+
+    dispatch({ type: FACEBOOK_LOGIN_SUCCESS, payload });
+}
 
 const doFacebookLogin = async (dispatch) => {
     let { type, token } = await Facebook.logInWithReadPermissionsAsync('135562593712588', {
@@ -28,8 +48,13 @@ const doFacebookLogin = async (dispatch) => {
     }
 
     const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-    alert(`Response: ${(await response.json()).id}`);
+    const facebook_id = (await response.json()).id;
+
+    const payload = {
+        token,
+        facebook_id
+    }
 
     await AsyncStorage.setItem('fb_token', token);
-    dispatch({ type: FACEBOOK_LOGIN_SUCCESS, payload: token });
+    dispatch({ type: FACEBOOK_LOGIN_SUCCESS, payload });
 };
