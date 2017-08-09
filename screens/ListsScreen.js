@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
 import { connect } from 'react-redux';
+import { Icon } from 'react-native-elements';
 
 import { addUser, getLists } from '../actions';
 
@@ -15,7 +16,10 @@ class ListsScreen extends Component {
                     backgroundColor="rgba(0,0,0,0)"
                     color="rgba(0, 122, 255, 1)"
                 />
-            )
+            ),
+            tabBarIcon: ({ tintColor }) => {
+                return <Icon name="list-ol" type="font-awesome" size={30} color={tintColor} />
+            }
         });
     }
 

@@ -26,9 +26,13 @@ export default class App extends React.Component {
                     createList: { screen: CreateListScreen }
                 })
               },
-              scan: { screen: ScanScreen },
-              createItem: { screen: CreateItemScreen }
-
+              scan: { screen: ScanScreen }
+          }, {
+              tabBarOptions: {
+                  labelStyle: {
+                      fontSize: 12
+                  }
+              }
           })
         }
     }, {
