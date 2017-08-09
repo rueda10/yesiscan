@@ -4,7 +4,9 @@ import {
     ADD_USER_SUCCESS,
     ADD_USER_FAILURE,
     GET_LISTS_SUCCESS,
-    GET_LISTS_FAILURE
+    GET_LISTS_FAILURE,
+    ADD_LIST_SUCCESS,
+    ADD_LIST_FAILURE
 } from './types';
 
 let prefix = 'http://localhost:3000';

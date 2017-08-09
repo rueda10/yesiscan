@@ -6,16 +6,22 @@ import {
 } from '../actions/types';
 
 export default function(state = [], action) {
+    console.log('%%%%%%%%%%%%%%%%%%%%%%%', action);
     switch(action.type) {
         case GET_LISTS_SUCCESS: {
-            return { ...state, lists: action.payload }
+            return { lists: action.payload }
         }
         case GET_LISTS_FAILURE: {
             return { lists: [] }
         }
         case ADD_LIST_SUCCESS: {
             const newLists = [ ...state.lists, action.payload ];
-            return { ...state, lists: newLists }
+            console.log('###################', newLists);
+            return { lists: newLists }
+        }
+        case ADD_LIST_FAILURE: {
+            console.log('&&&&&&&&&&&&&&&&&& STATE', state);
+            return state
         }
         default:
             return state

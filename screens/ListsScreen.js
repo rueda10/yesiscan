@@ -31,7 +31,6 @@ class ListsScreen extends Component {
     }
 
     render() {
-        console.log('###################', this.props.lists);
         if (this.props.lists.length < 1) {
             return <View></View>
         }
