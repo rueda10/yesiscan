@@ -51,7 +51,7 @@ class Slides extends Component {
             return (
                 <Animated.View
                     key={index}
-                    style={{ opacity, height: 10, width: 10, backgroundColor: '#595959', margin: 8, borderRadius:  5 }}
+                    style={[styles.dotStyle, { opacity }]}
                 />
             )
         });
@@ -72,7 +72,7 @@ class Slides extends Component {
                 >
                     {this.renderSlides()}
                 </ScrollView>
-                <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 110 }}>
+                <View style={styles.dotsStyle}>
                     {this.renderDots()}
                 </View>
             </View>
@@ -105,6 +105,18 @@ const styles = {
     imageStyle: {
         width: 200,
         height: 200
+    },
+    dotStyle: {
+        height: 10,
+        width: 10,
+        backgroundColor: '#595959',
+        margin: 8,
+        borderRadius: 5
+    },
+    dotsStyle: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginBottom: 110
     }
 };
 

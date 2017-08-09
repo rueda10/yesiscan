@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
 import { connect } from 'react-redux';
 
-import { addUser } from '../actions';
+import { addUser, getLists } from '../actions';
 
 class ListsScreen extends Component {
     static navigationOptions = ({ navigation, screenProps }) => {
@@ -19,33 +19,37 @@ class ListsScreen extends Component {
         });
     }
 
-    componentDidMount() {
-        this.props.addUser(this.props.facebook_id);
+    async componentDidMount() {
+        await this.props.addUser(this.props.facebook_id);
+        this.props.getLists(this.props.userId);
     }
 
-    componentDidUpdate() {
-        // get list here
+    renderLists() {
+        return this.props.lists.lists.map((list, index) => {
+            return <Text key={list._id} >{list.name}</Text>;
+        });
     }
 
     render() {
+        console.log('###################', this.props.lists);
+        if (this.props.lists.length < 1) {
+            return <View></View>
+        }
+
         return (
             <View>
-                <Text>{this.props.facebook_id}</Text>
-                <Text>{this.props.userId}</Text>
-                <Text>ListsScreen</Text>
-                <Text>ListsScreen</Text>
-                <Text>ListsScreen</Text>
-                <Text>ListsScreen</Text>
+                {this.renderLists()}
             </View>
         )
     }
 }
 
-function mapStateToProps({ auth, user }) {
+function mapStateToProps({ auth, user, lists }) {
     return {
         facebook_id: auth.facebook_id,
-        userId: user.userId
+        userId: user.userId,
+        lists: lists
     };
 }
 
-export default connect(mapStateToProps, { addUser })(ListsScreen);
+export default connect(mapStateToProps, { addUser, getLists })(ListsScreen);

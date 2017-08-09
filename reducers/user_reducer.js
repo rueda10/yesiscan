@@ -1,6 +1,6 @@
 import {
     ADD_USER_SUCCESS,
-    ADD_USER_FAIL
+    ADD_USER_FAILURE
 } from '../actions/types';
 
 export default function(state = {}, action) {
@@ -8,7 +8,7 @@ export default function(state = {}, action) {
         case ADD_USER_SUCCESS: {
             return { userId: action.payload }
         }
-        case ADD_USER_FAIL: {
+        case ADD_USER_FAILURE: {
             return { userId: null }
         }
         default:
