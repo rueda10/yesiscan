@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { View, Button, DeviceEventEmitter } from 'react-native';
 import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
+import { AppLoading } from 'expo';
 
-import { addUser, getLists, selectList } from '../actions';
+import { addUser, getLists, selectList, deleteList } from '../actions';
 
 import MyList from '../components/MyList';
 
@@ -36,13 +37,25 @@ class ListsScreen extends Component {
         this.props.navigation.navigate('items', { name: listName });
     }
 
+    onListDeleted = async (listId) => {
+        await this.props.deleteList(this.props.userId, listId);
+    }
+
     render() {
         if (!this.props.lists.lists) {
+            return <AppLoading />;
+        }
+
+        if (this.props.lists.lists.length < 1) {
             return <View></View>
         }
 
         return (
-            <MyList list={this.props.lists.lists} onListSelected={this.onListSelected} />
+            <MyList
+                list={this.props.lists.lists}
+                onListSelected={this.onListSelected}
+                onListDeleted={this.onListDeleted}
+            />
         )
     }
 }
@@ -55,4 +68,4 @@ function mapStateToProps({ auth, user, lists }) {
     };
 }
 
-export default connect(mapStateToProps, { addUser, getLists, selectList })(ListsScreen);
+export default connect(mapStateToProps, { addUser, getLists, selectList, deleteList })(ListsScreen);

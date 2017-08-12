@@ -2,7 +2,9 @@ import {
     GET_LISTS_SUCCESS,
     GET_LISTS_FAILURE,
     ADD_LIST_SUCCESS,
-    ADD_LIST_FAILURE
+    ADD_LIST_FAILURE,
+    DELETE_LIST_SUCCESS,
+    DELETE_LIST_FAILURE
 } from '../actions/types';
 
 export default function(state = [], action) {
@@ -18,6 +20,12 @@ export default function(state = [], action) {
             return { lists: newLists }
         }
         case ADD_LIST_FAILURE: {
+            return state
+        }
+        case DELETE_LIST_SUCCESS: {
+            return { lists: action.payload }
+        }
+        case DELETE_LIST_FAILURE: {
             return state
         }
         default:

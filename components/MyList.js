@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ListView, TouchableWithoutFeedback, View, Text } from 'react-native';
 import { CardSection } from './common';
+import Swipeout from 'react-native-swipeout';
 
 class MyList extends Component {
     constructor(props) {
@@ -14,32 +15,37 @@ class MyList extends Component {
             dataSource: this.ds.cloneWithRows(this.props.list)
         }
 
-        this.listSelected = this.listSelected.bind(this);
         this.renderRow = this.renderRow.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            dataSource: this.ds.cloneWithRows(this.props.list)
+            dataSource: this.ds.cloneWithRows(nextProps.list)
         })
     }
 
-    listSelected(listId, listName) {
-        this.props.onListSelected(listId, listName);
-    }
-
-
     renderRow(list) {
+        let swipeButtons = [{
+            text: 'Delete',
+            backgroundColor: 'red',
+            underlayColor: 'rgba(0, 0, 0, 0.6)',
+            onPress: () => { this.props.onListDeleted(list._id) }
+        }];
+
         return (
-            <TouchableWithoutFeedback onPress={() => {this.listSelected(list._id, list.name)}}>
-                <View>
-                    <CardSection>
-                        <Text style={styles.titleStyle}>
-                            {list.name}
-                        </Text>
-                    </CardSection>
-                </View>
-            </TouchableWithoutFeedback>
+            <Swipeout right={swipeButtons}
+                      autoClose
+                      backgroundColor= 'transparent'>
+                <TouchableWithoutFeedback onPress={() => {this.props.onListSelected(list._id, list.name)}}>
+                    <View>
+                        <CardSection>
+                            <Text style={styles.titleStyle}>
+                                {list.name}
+                            </Text>
+                        </CardSection>
+                    </View>
+                </TouchableWithoutFeedback>
+            </Swipeout>
         )
     }
 
@@ -55,8 +61,7 @@ class MyList extends Component {
 
 const styles = {
     titleStyle: {
-        fontSize: 18,
-        paddingLeft: 15
+        fontSize: 18
     }
 }
 
