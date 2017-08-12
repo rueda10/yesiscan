@@ -12,6 +12,7 @@ import ListsScreen from './screens/ListsScreen';
 import CreateListScreen from './screens/CreateListScreen';
 import ScanScreen from './screens/ScanScreen';
 import ItemsScreen from './screens/ItemsScreen';
+import CreateItemScreen from './screens/CreateItemScreen';
 
 export default class App extends React.Component {
   render() {
@@ -31,6 +32,12 @@ export default class App extends React.Component {
                     },
                     items: {
                         screen: ItemsScreen,
+                        navigationOptions: {
+                            tabBarVisible: false
+                        }
+                    },
+                    createItem: {
+                        screen: CreateItemScreen,
                         navigationOptions: {
                             tabBarVisible: false
                         }

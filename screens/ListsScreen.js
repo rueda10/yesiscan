@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Button, DeviceEventEmitter } from 'react-native';
+import { View, Button, DeviceEventEmitter } from 'react-native';
 import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 
@@ -31,9 +31,9 @@ class ListsScreen extends Component {
         DeviceEventEmitter.addListener('LIST_CREATED', (e) => {this.forceUpdate()});
     }
 
-    onListSelected = (listId) => {
+    onListSelected = (listId, listName) => {
         this.props.selectList(listId);
-        this.props.navigation.navigate('items');
+        this.props.navigation.navigate('items', { name: listName });
     }
 
     render() {

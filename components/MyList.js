@@ -24,14 +24,14 @@ class MyList extends Component {
         })
     }
 
-    listSelected(listId) {
-        this.props.onListSelected(listId);
+    listSelected(listId, listName) {
+        this.props.onListSelected(listId, listName);
     }
 
 
     renderRow(list) {
         return (
-            <TouchableWithoutFeedback onPress={() => {this.listSelected(list._id)}}>
+            <TouchableWithoutFeedback onPress={() => {this.listSelected(list._id, list.name)}}>
                 <View>
                     <CardSection>
                         <Text style={styles.titleStyle}>

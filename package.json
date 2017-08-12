@@ -10,11 +10,8 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
-    "body-parser": "^1.17.2",
     "expo": "^19.0.0",
-    "express": "^4.15.4",
     "lodash": "^4.17.4",
-    "mongoose": "^4.11.6",
     "react": "16.0.0-alpha.12",
     "react-native": "https://github.com/expo/react-native/archive/sdk-19.0.0.tar.gz",
     "react-native-elements": "^0.15.0",
