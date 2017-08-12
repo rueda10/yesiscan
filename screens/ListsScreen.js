@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, DeviceEventEmitter } from 'react-native';
 import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 
-import { addUser, getLists } from '../actions';
+import { addUser, getLists, selectList } from '../actions';
+
+import MyList from '../components/MyList';
 
 class ListsScreen extends Component {
     static navigationOptions = ({ navigation, screenProps }) => {
@@ -23,26 +25,24 @@ class ListsScreen extends Component {
         });
     }
 
-    async componentDidMount() {
+    async componentWillMount() {
         await this.props.addUser(this.props.facebook_id);
-        this.props.getLists(this.props.userId);
+        await this.props.getLists(this.props.userId);
+        DeviceEventEmitter.addListener('LIST_CREATED', (e) => {this.forceUpdate()});
     }
 
-    renderLists() {
-        return this.props.lists.lists.map((list, index) => {
-            return <Text key={list._id} >{list.name}</Text>;
-        });
+    onListSelected = (listId) => {
+        this.props.selectList(listId);
+        this.props.navigation.navigate('items');
     }
 
     render() {
-        if (this.props.lists.length < 1) {
+        if (!this.props.lists.lists) {
             return <View></View>
         }
 
         return (
-            <View>
-                {this.renderLists()}
-            </View>
+            <MyList list={this.props.lists.lists} onListSelected={this.onListSelected} />
         )
     }
 }
@@ -55,4 +55,4 @@ function mapStateToProps({ auth, user, lists }) {
     };
 }
 
-export default connect(mapStateToProps, { addUser, getLists })(ListsScreen);
+export default connect(mapStateToProps, { addUser, getLists, selectList })(ListsScreen);

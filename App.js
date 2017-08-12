@@ -11,7 +11,7 @@ import WelcomeScreen from './screens/WelcomeScreen';
 import ListsScreen from './screens/ListsScreen';
 import CreateListScreen from './screens/CreateListScreen';
 import ScanScreen from './screens/ScanScreen';
-import CreateItemScreen from './screens/CreateItemScreen';
+import ItemsScreen from './screens/ItemsScreen';
 
 export default class App extends React.Component {
   render() {
@@ -23,7 +23,18 @@ export default class App extends React.Component {
               lists: {
                 screen: StackNavigator({
                     listsScreen: { screen: ListsScreen },
-                    createList: { screen: CreateListScreen }
+                    createList: {
+                        screen: CreateListScreen,
+                        navigationOptions: {
+                            tabBarVisible: false
+                        }
+                    },
+                    items: {
+                        screen: ItemsScreen,
+                        navigationOptions: {
+                            tabBarVisible: false
+                        }
+                    }
                 })
               },
               scan: { screen: ScanScreen }

@@ -6,7 +6,6 @@ import {
 } from '../actions/types';
 
 export default function(state = [], action) {
-    console.log('%%%%%%%%%%%%%%%%%%%%%%%', action);
     switch(action.type) {
         case GET_LISTS_SUCCESS: {
             return { lists: action.payload }
@@ -16,11 +15,9 @@ export default function(state = [], action) {
         }
         case ADD_LIST_SUCCESS: {
             const newLists = [ ...state.lists, action.payload ];
-            console.log('###################', newLists);
             return { lists: newLists }
         }
         case ADD_LIST_FAILURE: {
-            console.log('&&&&&&&&&&&&&&&&&& STATE', state);
             return state
         }
         default:

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, DeviceEventEmitter } from 'react-native';
 import { connect } from 'react-redux';
 
 import MyTextInput from '../components/MyTextInput';
@@ -7,6 +7,10 @@ import MyTextInput from '../components/MyTextInput';
 import { addList } from '../actions';
 
 class CreateListScreen extends Component {
+    static navigationOptions = {
+        title: 'Add List'
+    }
+
     constructor(props) {
         super(props);
 
@@ -20,7 +24,8 @@ class CreateListScreen extends Component {
 
     async addList() {
         await this.props.addList(this.props.userId, this.state.listName);
-        this.props.navigation.navigate('lists');
+        this.props.navigation.goBack();
+        DeviceEventEmitter.emit('LIST_CREATED', {});
     }
 
     setListName(listName) {
