@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { View, Button, Text } from 'react-native';
+import { connect } from 'react-redux';
+
+import { getItems } from '../actions';
 
 class ItemsScreen extends Component {
     static navigationOptions = ({ navigation, screenProps }) => {
@@ -16,18 +19,34 @@ class ItemsScreen extends Component {
         });
     }
 
+    async componentWillUpdate() {
+        await this.props.getItems(this.props.listsSelection);
+    }
+
     render() {
+        if (!this.props.items) {
+            return <AppLoading />;
+        }
+
+        if (this.props.items.length < 1) {
+            return <View></View>
+        }
+
         return (
-            <View>
-                <Text>ItemsScreen</Text>
-                <Text>ItemsScreen</Text>
-                <Text>ItemsScreen</Text>
-                <Text>ItemsScreen</Text>
-                <Text>ItemsScreen</Text>
-                <Text>ItemsScreen</Text>
-            </View>
+            <MyList
+                list={this.props.items}
+                onListSelected={this.onListSelected}
+                onListDeleted={this.onListDeleted}
+            />
         )
     }
 }
 
-export default ItemsScreen;
+function mapStateToProps({ listsSelection, currentItems }) {
+    return {
+        listId: listsSelection,
+        items: currentItems
+    };
+}
+
+export default connect(mapStateToProps, { getItems })(ItemsScreen);

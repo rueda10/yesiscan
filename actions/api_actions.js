@@ -8,7 +8,9 @@ import {
     ADD_LIST_SUCCESS,
     ADD_LIST_FAILURE,
     DELETE_LIST_SUCCESS,
-    DELETE_LIST_FAILURE
+    DELETE_LIST_FAILURE,
+    GET_ITEMS_SUCCESS,
+    GET_ITEMS_FAILURE
 } from './types';
 
 let prefix = 'https://calm-journey-35242.herokuapp.com';
@@ -76,6 +78,23 @@ export const deleteList = (userId, listId) => async (dispatch) => {
     } else {
         dispatch({
             type: DELETE_LIST_SUCCESS,
+            payload: request.data
+        })
+    }
+}
+
+export const getItems = (listId) => async (dispatch) => {
+    // Returns array of items for given list, empty string if error
+    const request = await axios.get(prefix + '/api/users/lists/' + listId + '/items');
+
+    if (request.data === '') {
+        dispatch({
+            type: GET_ITEMS_FAILURE,
+            payload: request.data
+        })
+    } else {
+        dispatch({
+            type: GET_ITEMS_SUCCESS,
             payload: request.data
         })
     }

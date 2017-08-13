@@ -29,6 +29,8 @@ class MyList extends Component {
             text: 'Delete',
             backgroundColor: 'red',
             underlayColor: 'rgba(0, 0, 0, 0.6)',
+            borderBottomWidth: 1,
+            borderColor: '#ddd',
             onPress: () => { this.props.onListDeleted(list._id) }
         }];
 

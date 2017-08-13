@@ -81,7 +81,7 @@ const styles = {
         alignItems: 'flex-end'
     },
     rectangleStyle: {
-        width: 100,
+        width: 70,
         height: 50,
         borderWidth: 4,
         borderRadius: 5,
