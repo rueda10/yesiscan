@@ -10,7 +10,9 @@ import {
     DELETE_LIST_SUCCESS,
     DELETE_LIST_FAILURE,
     GET_ITEMS_SUCCESS,
-    GET_ITEMS_FAILURE
+    GET_ITEMS_FAILURE,
+    ADD_ITEM_SUCCESS,
+    ADD_ITEM_FAILURE
 } from './types';
 
 let prefix = 'https://calm-journey-35242.herokuapp.com';
@@ -27,7 +29,7 @@ export const addUser = (facebookId) => async (dispatch) => {
     } else {
         dispatch({
             type: ADD_USER_SUCCESS,
-            payload: request.data
+            payload: request.data.id
         });
     }
 }
@@ -95,6 +97,23 @@ export const getItems = (listId) => async (dispatch) => {
     } else {
         dispatch({
             type: GET_ITEMS_SUCCESS,
+            payload: request.data
+        })
+    }
+}
+
+export const addItem = (listId, name) => async (dispatch) => {
+    // Returns item object of newly added item, empty string if error
+    const request = await axios.post(prefix + '/api/users/lists/' + listId + '/items', { name });
+
+    if (request.data === '') {
+        dispatch({
+            type: ADD_ITEM_FAILURE,
+            payload: request.data
+        })
+    } else {
+        dispatch({
+            type: ADD_ITEM_SUCCESS,
             payload: request.data
         })
     }

@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { View, Button, DeviceEventEmitter } from 'react-native';
 import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
-import { AppLoading } from 'expo';
 
 import { addUser, getLists, selectList, deleteList } from '../actions';
 
 import MyList from '../components/MyList';
+import { Spinner } from '../components/common';
 
 class ListsScreen extends Component {
     static navigationOptions = ({ navigation, screenProps }) => {
@@ -43,7 +43,7 @@ class ListsScreen extends Component {
 
     render() {
         if (!this.props.lists.lists) {
-            return <AppLoading />;
+            return <Spinner />;
         }
 
         if (this.props.lists.lists.length < 1) {

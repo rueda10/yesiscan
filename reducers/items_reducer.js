@@ -1,15 +1,24 @@
 import {
     GET_ITEMS_SUCCESS,
-    GET_ITEMS_FAILURE
+    GET_ITEMS_FAILURE,
+    ADD_ITEM_SUCCESS,
+    ADD_ITEM_FAILURE
 } from '../actions/types';
 
 export default function(state = [], action) {
     switch(action.type) {
         case GET_ITEMS_SUCCESS: {
-            return { currentItems: action.payload }
+            return { currentItems: action.payload };
         }
         case GET_ITEMS_FAILURE: {
-            return { currentItems: [] }
+            return { currentItems: [] };
+        }
+        case ADD_ITEM_SUCCESS: {
+            const newItems = [ ...state.currentItems, action.payload ]
+            return { currentItems: newItems };
+        }
+        case ADD_ITEM_FAILURE: {
+            return state;
         }
         default:
             return state

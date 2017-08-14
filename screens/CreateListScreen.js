@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, Button, DeviceEventEmitter } from 'react-native';
+import { DeviceEventEmitter } from 'react-native';
 import { connect } from 'react-redux';
 
-import MyTextInput from '../components/MyTextInput';
+import { Card, CardSection, Button, Input } from '../components/common';
 
 import { addList } from '../actions';
 
@@ -36,14 +36,16 @@ class CreateListScreen extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1 }}>
-                <Text style={styles.textStyle}>Enter List Name</Text>
-                <MyTextInput setTerm={this.setListName} />
-                <Button
-                    onPress={this.addList}
-                    title="Add List"
-                />
-            </View>
+            <Card>
+                <CardSection>
+                    <Input label="List name" onChangeText={this.setListName} />
+                </CardSection>
+                <CardSection>
+                    <Button onPress={this.addList}>
+                        Add List
+                    </Button>
+                </CardSection>
+            </Card>
         )
     }
 }

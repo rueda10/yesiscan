@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import { getItems } from '../actions';
 
+import { Spineer } from '../components/common';
+
 class ItemsScreen extends Component {
     static navigationOptions = ({ navigation, screenProps }) => {
         return ({
@@ -25,7 +27,7 @@ class ItemsScreen extends Component {
 
     render() {
         if (!this.props.items) {
-            return <AppLoading />;
+            return <Spinner />;
         }
 
         if (this.props.items.length < 1) {
@@ -42,9 +44,9 @@ class ItemsScreen extends Component {
     }
 }
 
-function mapStateToProps({ listsSelection, currentItems }) {
+function mapStateToProps({ currentList, currentItems }) {
     return {
-        listId: listsSelection,
+        listId: currentList,
         items: currentItems
     };
 }
