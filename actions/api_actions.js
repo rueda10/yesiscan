@@ -15,8 +15,8 @@ import {
     ADD_ITEM_FAILURE
 } from './types';
 
-let prefix = 'https://calm-journey-35242.herokuapp.com';
-// let prefix = 'http://localhost:3000';
+// let prefix = 'https://calm-journey-35242.herokuapp.com';
+let prefix = 'http://localhost:3000';
 
 export const addUser = (facebookId) => async (dispatch) => {
     // Returns new user ID if successful, empty string if error

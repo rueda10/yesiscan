@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, Dimensions, Button, Image, Animated } from 'react-native';
+import { View, Text, ScrollView, Dimensions, TouchableOpacity, Image, Animated } from 'react-native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -28,12 +28,12 @@ class Slides extends Component {
                    key={slide.text}
                    style={[styles.slideStyle, {backgroundColor: 'white'}]}
                >
-                   <Text style={styles.textStyle}>{slide.text}</Text>
                    <Image
                        style={styles.imageStyle}
                        source={{ uri: slide.image }}
                    />
-                   {this.renderLastSlide(index)}
+                   <Text style={styles.titleStyle}>{slide.title}</Text>
+                   <Text style={styles.textStyle}>{slide.text}</Text>
                </View>
            )
         });
@@ -75,6 +75,11 @@ class Slides extends Component {
                 <View style={styles.dotsStyle}>
                     {this.renderDots()}
                 </View>
+                <TouchableOpacity onPress={this.props.onComplete} style={styles.buttonStyle}>
+                    <Text style={styles.buttonTextStyle}>
+                        START NOW
+                    </Text>
+                </TouchableOpacity>
             </View>
         )
     }
@@ -93,30 +98,54 @@ const styles = {
         marginRight: 30,
         marginTop: 80
     },
-    textStyle: {
+    titleStyle: {
         fontSize: 30,
         textAlign: 'center',
-        color: 'black'
+        color: '#F97C2C',
+        marginBottom: 20
+    },
+    textStyle: {
+        fontSize: 18,
+        textAlign: 'center',
+        color: 'black',
+        marginBottom: 140
     },
     buttonStyle: {
-        backgroundColor: '#0288D1',
         marginTop: 40
     },
     imageStyle: {
-        width: 200,
-        height: 200
+        width: 300,
+        height: 300,
     },
     dotStyle: {
-        height: 10,
-        width: 10,
+        height: 8,
+        width: 8,
         backgroundColor: '#595959',
-        margin: 8,
+        margin: 5,
         borderRadius: 5
     },
     dotsStyle: {
         flexDirection: 'row',
         justifyContent: 'center',
         marginBottom: 110
+    },
+    buttonStyle: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: 60,
+        alignSelf: 'stretch',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#87B6D8',
+        borderTopWidth: 1,
+        borderTopColor: '#D9DFDF'
+    },
+    buttonTextStyle: {
+        color: '#FCFDFD',
+        fontSize: 20,
+        fontWeight: '600'
     }
 };
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { DeviceEventEmitter } from 'react-native';
+import { DeviceEventEmitter, Picker } from 'react-native';
 import { connect } from 'react-redux';
 
 import { Card, CardSection, Button, Input } from '../components/common';
@@ -15,6 +15,7 @@ class CreateItemScreen extends Component {
         super(props);
 
         this.state = {
+            listId: '',
             itemName: ''
         }
 
@@ -22,8 +23,13 @@ class CreateItemScreen extends Component {
         this.setItemName = this.setItemName.bind(this);
     }
 
+    componentWillMount() {
+        this.setState({
+            listId: this.props.list.id
+        });
+    }
     async addItem() {
-        await this.props.addItem(this.props.listId, this.state.itemName);
+        await this.props.addItem(this.props.list.id, this.state.itemName);
         this.props.navigation.goBack();
         DeviceEventEmitter.emit('ITEM_CREATED', {});
     }
@@ -34,9 +40,24 @@ class CreateItemScreen extends Component {
         })
     }
 
+    populatePicker() {
+        return this.props.lists.lists.map(list => {
+            return <Picker.Item key={list.id} label={list.name} value={list.id} />
+        });
+    }
+
     render() {
         return (
             <Card>
+                <CardSection>
+                    <Picker
+                        style={styles.pickerStyle}
+                        selectedValue={this.state.listId}
+                        onValueChange={(itemValue, itemIndex) => this.setState({ listId: itemValue })}
+                    >
+                        {this.populatePicker()}
+                    </Picker>
+                </CardSection>
                 <CardSection>
                     <Input label="Item name" onChangeText={this.setItemName} />
                 </CardSection>
@@ -45,8 +66,18 @@ class CreateItemScreen extends Component {
     }
 }
 
-function mapStateToProps({ currentList }) {
-    return { listId: currentList };
+const styles = {
+    pickerStyle: {
+        flex: 1,
+        alignSelf: 'stretch'
+    }
+}
+
+function mapStateToProps({ currentList, lists }) {
+    return {
+        list: currentList,
+        lists: lists
+    };
 }
 
 export default connect(mapStateToProps, { addItem })(CreateItemScreen);

@@ -47,9 +47,9 @@ class ListsScreen extends Component {
         DeviceEventEmitter.addListener('LIST_CREATED', (e) => {this.forceUpdate()});
     }
 
-    onListSelected = (listId, listName) => {
-        this.props.selectList(listId);
-        this.props.navigation.navigate('items', { name: listName });
+    onListSelected = (list) => {
+        this.props.selectList(list);
+        this.props.navigation.navigate('items', { name: list.name });
     }
 
     onListDeleted = async (listId) => {

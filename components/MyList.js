@@ -38,7 +38,7 @@ class MyList extends Component {
             <Swipeout right={swipeButtons}
                       autoClose
                       backgroundColor= 'transparent'>
-                <TouchableWithoutFeedback onPress={() => {this.props.onListSelected(list.id, list.name)}}>
+                <TouchableWithoutFeedback onPress={() => {this.props.onListSelected(list)}}>
                     <View>
                         <CardSection>
                             <Text style={styles.titleStyle}>

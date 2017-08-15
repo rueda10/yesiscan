@@ -37,7 +37,7 @@ class ItemsScreen extends Component {
     }
 
     async componentWillUpdate() {
-        await this.props.getItems(this.props.listsSelection);
+        await this.props.getItems(this.props.listsSelection.id);
     }
 
     render() {
@@ -61,7 +61,7 @@ class ItemsScreen extends Component {
 
 function mapStateToProps({ currentList, currentItems }) {
     return {
-        listId: currentList,
+        list: currentList,
         items: currentItems
     };
 }
