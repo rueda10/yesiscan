@@ -30,7 +30,7 @@ class MyList extends Component {
             backgroundColor: 'red',
             underlayColor: 'rgba(0, 0, 0, 0.6)',
             borderBottomWidth: 1,
-            borderColor: '#ddd',
+            borderColor: '#FCFDFD',
             onPress: () => { this.props.onListDeleted(list._id) }
         }];
 
@@ -56,6 +56,7 @@ class MyList extends Component {
             <ListView
                 dataSource={this.state.dataSource}
                 renderRow={this.renderRow}
+                style={styles.listStyle}
             />
         )
     }
@@ -64,6 +65,9 @@ class MyList extends Component {
 const styles = {
     titleStyle: {
         fontSize: 18
+    },
+    listStyle: {
+        marginTop: 3
     }
 }
 

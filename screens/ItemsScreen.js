@@ -15,9 +15,24 @@ class ItemsScreen extends Component {
                     title="Add"
                     onPress={() => navigation.navigate('createItem')}
                     backgroundColor="rgba(0,0,0,0)"
-                    color="rgba(0, 122, 255, 1)"
+                    color="#FCFDFD"
                 />
-            )
+            ),
+            headerTitleStyle: {
+                // title/text
+                color: '#FCFDFD',
+                fontSize: 20
+            },
+            headerTintColor: '#FCFDFD', // buttons/arrows
+            headerStyle: {
+                // header itself
+                shadowColor: '#FCFDFD',
+                shadowOffset: { width: 0, height: 3 },
+                shadowOpacity: 0.3,
+                elevation: 2,
+                height: 60,
+                backgroundColor: '#87B6D8'
+            }
         });
     }
 

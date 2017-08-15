@@ -47,9 +47,12 @@ export default class App extends React.Component {
               scan: { screen: ScanScreen }
           }, {
               tabBarOptions: {
-                  labelStyle: {
-                      fontSize: 12
-                  }
+                  showLabel: false,
+                  style: {
+                      backgroundColor: '#87B6D8'
+                  },
+                  activeTintColor: '#FCFDFD',
+                  inactiveTintColor: '#5B5A62'
               }
           })
         }

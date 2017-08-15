@@ -81,7 +81,7 @@ const styles = {
         alignItems: 'flex-end'
     },
     rectangleStyle: {
-        width: 70,
+        width: 50,
         height: 50,
         borderWidth: 4,
         borderRadius: 5,
@@ -91,29 +91,29 @@ const styles = {
         position: 'absolute',
         top: 0,
         left: 0,
-        borderTopColor: '#8C1232',
-        borderLeftColor: '#8C1232'
+        borderTopColor: '#F97C2C',
+        borderLeftColor: '#F97C2C'
     },
     bottomLeftStyle: {
         position: 'absolute',
         bottom: 0,
         left: 0,
-        borderBottomColor: '#8C1232',
-        borderLeftColor: '#8C1232'
+        borderBottomColor: '#F97C2C',
+        borderLeftColor: '#F97C2C'
     },
     topRightStyle: {
         position: 'absolute',
         top: 0,
         right: 0,
-        borderTopColor: '#8C1232',
-        borderRightColor: '#8C1232'
+        borderTopColor: '#F97C2C',
+        borderRightColor: '#F97C2C'
     },
     bottomRightStyle: {
         position: 'absolute',
         bottom: 0,
         right: 0,
-        borderBottomColor: '#8C1232',
-        borderRightColor: '#8C1232'
+        borderBottomColor: '#F97C2C',
+        borderRightColor: '#F97C2C'
     }
 };
 

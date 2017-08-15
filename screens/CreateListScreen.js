@@ -8,7 +8,20 @@ import { addList } from '../actions';
 
 class CreateListScreen extends Component {
     static navigationOptions = {
-        title: 'Add List'
+        title: 'Add List',
+        headerTitleStyle: {
+            color: '#FCFDFD',
+            fontSize: 20
+        },
+        headerTintColor: '#FCFDFD',
+        headerStyle: {
+            shadowColor: '#FCFDFD',
+            shadowOffset: { width: 0, height: 3 },
+            shadowOpacity: 0.3,
+            elevation: 2,
+            height: 60,
+            backgroundColor: '#87B6D8'
+        }
     }
 
     constructor(props) {
