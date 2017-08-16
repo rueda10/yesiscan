@@ -1,27 +1,37 @@
 import React, { Component } from 'react';
-import { DeviceEventEmitter } from 'react-native';
+import { DeviceEventEmitter, Button } from 'react-native';
 import { connect } from 'react-redux';
 
-import { Card, CardSection, Button, Input } from '../components/common';
+import { Card, CardSection, Input } from '../components/common';
 
 import { addList } from '../actions';
 
 class CreateListScreen extends Component {
-    static navigationOptions = {
-        title: 'Add List',
-        headerTitleStyle: {
-            color: '#FCFDFD',
-            fontSize: 20
-        },
-        headerTintColor: '#FCFDFD',
-        headerStyle: {
-            shadowColor: '#FCFDFD',
-            shadowOffset: { width: 0, height: 3 },
-            shadowOpacity: 0.3,
-            elevation: 2,
-            height: 60,
-            backgroundColor: '#87B6D8'
-        }
+    static navigationOptions = ({ navigation, screenProps }) => {
+        return ({
+            title: 'Add List',
+            headerRight: (
+                <Button
+                    title="Save"
+                    onPress={() => navigation.state.params.addList()}
+                    backgroundColor="rgba(0,0,0,0)"
+                    color="#FCFDFD"
+                />
+            ),
+            headerTitleStyle: {
+                color: '#FCFDFD',
+                fontSize: 20
+            },
+            headerTintColor: '#FCFDFD',
+            headerStyle: {
+                shadowColor: '#FCFDFD',
+                shadowOffset: {width: 0, height: 3},
+                shadowOpacity: 0.3,
+                elevation: 2,
+                height: 60,
+                backgroundColor: '#87B6D8'
+            }
+        });
     }
 
     constructor(props) {
@@ -33,6 +43,10 @@ class CreateListScreen extends Component {
 
         this.addList = this.addList.bind(this);
         this.setListName = this.setListName.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.navigation.setParams({ addList: this.addList });
     }
 
     async addList() {
@@ -51,12 +65,7 @@ class CreateListScreen extends Component {
         return (
             <Card>
                 <CardSection>
-                    <Input label="List name" onChangeText={this.setListName} />
-                </CardSection>
-                <CardSection>
-                    <Button onPress={this.addList}>
-                        Add List
-                    </Button>
+                    <Input label="Name:" placeholder="List Name" onChangeText={this.setListName} />
                 </CardSection>
             </Card>
         )

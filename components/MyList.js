@@ -31,7 +31,7 @@ class MyList extends Component {
             underlayColor: 'rgba(0, 0, 0, 0.6)',
             borderBottomWidth: 1,
             borderColor: '#FCFDFD',
-            onPress: () => { this.props.onListDeleted(list._id) }
+            onPress: () => { this.props.onListDeleted(list.id) }
         }];
 
         return (
