@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { DeviceEventEmitter, Button } from 'react-native';
+import { DeviceEventEmitter, View, Button, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 
 import { Card, CardSection, Input } from '../components/common';
@@ -57,17 +57,21 @@ class CreateListScreen extends Component {
 
     setListName(listName) {
         this.setState({
-            listName: listName
+            listName
         });
     }
 
     render() {
         return (
-            <Card>
-                <CardSection>
-                    <Input label="Name:" placeholder="List Name" onChangeText={this.setListName} />
-                </CardSection>
-            </Card>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={{ flex: 1, alignItems: 'stretch' }}>
+                    <Card>
+                        <CardSection>
+                            <Input label="Name:" placeholder="List Name" onChangeText={this.setListName} />
+                        </CardSection>
+                    </Card>
+                </View>
+            </TouchableWithoutFeedback>
         )
     }
 }

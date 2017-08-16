@@ -102,9 +102,9 @@ export const getItems = (listId) => async (dispatch) => {
     }
 }
 
-export const addItem = (listId, name) => async (dispatch) => {
+export const addItem = (listId, name, image, description) => async (dispatch) => {
     // Returns item object of newly added item, empty string if error
-    const request = await axios.post(prefix + '/api/users/lists/' + listId + '/items', { name });
+    const request = await axios.post(prefix + '/api/users/lists/' + listId + '/items', { name, image, description });
 
     if (request.data === '') {
         dispatch({

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Button, Text } from 'react-native';
+import { View, Button, DeviceEventEmitter } from 'react-native';
 import { connect } from 'react-redux';
 
 import { getItems } from '../actions';
@@ -38,6 +38,7 @@ class ItemsScreen extends Component {
 
     async componentWillUpdate() {
         await this.props.getItems(this.props.listsSelection.id);
+        DeviceEventEmitter.addListener('ITEM_CREATED', (e) => {this.forceUpdate()});
     }
 
     render() {

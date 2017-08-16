@@ -1,12 +1,29 @@
 import React, { Component } from 'react';
-import { DeviceEventEmitter, TouchableWithoutFeedback, View, Image, Button, TextInput, Text } from 'react-native';
+import {
+    DeviceEventEmitter,
+    TouchableWithoutFeedback,
+    View,
+    Image,
+    Button,
+    TextInput,
+    Text,
+    Keyboard,
+    ScrollView,
+    KeyboardAvoidingView
+} from 'react-native';
 import { Picker } from 'react-native-picker-dropdown';
 import { connect } from 'react-redux';
 import { ImagePicker } from 'expo';
+import ActionSheet from 'react-native-actionsheet';
 
 import { Card, CardSection, Input } from '../components/common';
 
 import { addItem } from '../actions';
+
+const CANCEL_INDEX = 0;
+const TAKE_PICTURE_INDEX = 1;
+const CHOOSE_FROM_LIBRARY_INDEX = 2;
+const DESTRUCTIVE_INDEX = 3;
 
 const IMAGE_PLACEHOLDER = 'http://cumbrianrun.co.uk/wp-content/uploads/2014/02/default-placeholder-300x300.png';
 
@@ -17,7 +34,7 @@ class CreateItemScreen extends Component {
             headerRight: (
                 <Button
                     title="Save"
-                    onPress={() => {}}
+                    onPress={() => {navigation.state.params.addItem()}}
                     backgroundColor="rgba(0,0,0,0)"
                     color="#FCFDFD"
                 />
@@ -43,14 +60,16 @@ class CreateItemScreen extends Component {
 
         this.state = {
             listId: '',
-            itemName: '',
+            name: '',
             image: null,
-            itemDescription: ''
+            description: ''
         }
 
         this.addItem = this.addItem.bind(this);
         this.setItemName = this.setItemName.bind(this);
         this.setItemDescription = this.setItemDescription.bind(this);
+        this.handleImagePress = this.handleImagePress.bind(this);
+        this.showActionSheet = this.showActionSheet.bind(this);
     }
 
     componentWillMount() {
@@ -58,21 +77,26 @@ class CreateItemScreen extends Component {
             listId: this.props.list.id
         });
     }
+
+    componentDidMount() {
+        this.props.navigation.setParams({ addItem: this.addItem });
+    }
+
     async addItem() {
-        await this.props.addItem(this.props.list.id, this.state.itemName);
+        await this.props.addItem(this.props.list.id, this.state.name, this.state.image, this.state.description);
         this.props.navigation.goBack();
         DeviceEventEmitter.emit('ITEM_CREATED', {});
     }
 
-    setItemName(itemName) {
+    setItemName(name) {
         this.setState({
-            itemName
+            name
         })
     }
 
-    setItemDescription(itemDescription) {
+    setItemDescription(description) {
         this.setState({
-            itemDescription
+            description
         })
     }
 
@@ -93,53 +117,104 @@ class CreateItemScreen extends Component {
         }
     }
 
+    takePicture = async () => {
+        const result = await ImagePicker.launchCameraAsync({
+            allowsEditing: true,
+            aspect: [4,3]
+        });
+
+        if (!result.cancelled) {
+            this.setState({ image: result.uri });
+        }
+    }
+
+    showActionSheet() {
+        this.ActionSheet.show();
+    }
+
+
+    handleImagePress(index) {
+        if (index === TAKE_PICTURE_INDEX) {
+            this.takePicture();
+        } else if (index === CHOOSE_FROM_LIBRARY_INDEX) {
+            this.pickImage();
+        }
+    }
+
     render() {
         return (
-            <Card>
-                <CardSection>
-                    <View style={styles.pickerContainerStyle}>
-                        <View style={styles.pickerViewStyle}>
-                            <Picker
-                                style={styles.pickerStyle}
-                                selectedValue={this.state.listId}
-                                onValueChange={(itemValue, itemIndex) => this.setState({ listId: itemValue })}
-                                mode="modal"
-                            >
-                                {this.populatePicker()}
-                            </Picker>
-                        </View>
-                    </View>
-                </CardSection>
-                <CardSection>
-                    <TouchableWithoutFeedback onPress={this.pickImage}>
-                        { this.state.image ?
-                            <Image
-                                style={styles.thumbnailStyle}
-                                source={{uri: this.state.image}}
-                            />
-                                :
-                            <Image
-                                style={styles.thumbnailStyle}
-                                source={{uri: IMAGE_PLACEHOLDER}}
-                            />
-                        }
-                    </TouchableWithoutFeedback>
-                </CardSection>
-                <CardSection>
-                    <Input label="Name:" placeholder="Item Name" onChangeText={this.setItemName} />
-                </CardSection>
-                <CardSection>
-                    <View style={styles.descriptionContainerStyle}>
-                        <Text style={styles.descriptionLabelStyle}>Description:</Text>
-                        <TextInput style={styles.descriptionStyle} placeholder="Item Description" multiline onChangeText={this.setItemDescription} />
-                    </View>
-                </CardSection>
-            </Card>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={{ flex: 1 }}>
+                    <KeyboardAvoidingView
+                        behavior="position"
+                        style={styles.containerStyle}
+                        keyboardVerticalOffset={0}
+                    >
+                        <Card>
+                            <CardSection>
+                                <View style={styles.pickerContainerStyle}>
+                                    <View style={styles.pickerViewStyle}>
+                                        <Picker
+                                            style={styles.pickerStyle}
+                                            selectedValue={this.state.listId}
+                                            onValueChange={(itemValue, itemIndex) => this.setState({ listId: itemValue })}
+                                            mode="modal"
+                                        >
+                                            {this.populatePicker()}
+                                        </Picker>
+                                    </View>
+                                </View>
+                            </CardSection>
+                            <CardSection>
+                                <TouchableWithoutFeedback onPress={this.showActionSheet}>
+                                    { this.state.image ?
+                                        <Image
+                                            style={styles.thumbnailStyle}
+                                            source={{uri: this.state.image}}
+                                        />
+                                            :
+                                        <Image
+                                            style={styles.thumbnailStyle}
+                                            source={{uri: IMAGE_PLACEHOLDER}}
+                                        />
+                                    }
+                                </TouchableWithoutFeedback>
+                                <ActionSheet
+                                    ref={o => this.ActionSheet = o}
+                                    options={['Cancel', 'Take a Picture', 'Choose from Library']}
+                                    cancelButtonIndex={CANCEL_INDEX}
+                                    destructiveButtonIndex={DESTRUCTIVE_INDEX}
+                                    onPress={this.handleImagePress}
+                                />
+                            </CardSection>
+                            <CardSection>
+                                <Input label="Name:" placeholder="Item Name" onChangeText={this.setItemName} />
+                            </CardSection>
+                            <CardSection>
+                                <View style={styles.descriptionContainerStyle}>
+                                    <Text style={styles.descriptionLabelStyle}>Description:</Text>
+                                    <TextInput
+                                        style={styles.descriptionStyle}
+                                        placeholder="Item Description"
+                                        multiline
+                                        blurOnSubmit
+                                        onChangeText={this.setItemDescription}
+                                        autoCorrect={false}
+                                    />
+                                </View>
+                            </CardSection>
+                        </Card>
+                    </KeyboardAvoidingView>
+                </View>
+            </TouchableWithoutFeedback>
         )
     }
 }
 
 const styles = {
+    containerStyle: {
+        flex: 1,
+    },
     pickerContainerStyle: {
         flex: 1,
         alignItems: 'center',
@@ -168,11 +243,11 @@ const styles = {
         height: 100,
         flex: 1,
         flexDirection: 'row',
-        alignItems: 'center'
+        // alignItems: 'center'
     },
     descriptionLabelStyle: {
         fontSize: 18,
-        paddingLeft: 20,
+        paddingLeft: 5,
         flex: 1
     },
     descriptionStyle: {
@@ -180,8 +255,11 @@ const styles = {
         color: '#000',
         paddingRight: 5,
         paddingLeft: 5,
+        marginLeft: 10,
         fontSize: 18,
-        flex: 2
+        flex: 2,
+        borderColor: '#D9DFDF',
+        borderWidth: 1
     }
 }
 
