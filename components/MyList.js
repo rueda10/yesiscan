@@ -12,7 +12,7 @@ class MyList extends Component {
         });
 
         this.state = {
-            dataSource: this.ds.cloneWithRows(this.props.list)
+            dataSource: this.ds.cloneWithRows(props.list)
         }
 
         this.renderRow = this.renderRow.bind(this);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { DeviceEventEmitter, View, Button, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { View, Button, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 
 import { Card, CardSection, Input } from '../components/common';
@@ -52,7 +52,6 @@ class CreateListScreen extends Component {
     async addList() {
         await this.props.addList(this.props.userId, this.state.listName);
         this.props.navigation.goBack();
-        DeviceEventEmitter.emit('LIST_CREATED', {});
     }
 
     setListName(listName) {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Button, DeviceEventEmitter } from 'react-native';
+import { View, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 
@@ -44,7 +44,6 @@ class ListsScreen extends Component {
     async componentWillMount() {
         await this.props.addUser(this.props.facebook_id);
         await this.props.getLists(this.props.userId);
-        DeviceEventEmitter.addListener('LIST_CREATED', (e) => {this.forceUpdate()});
     }
 
     onListSelected = (list) => {

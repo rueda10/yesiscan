@@ -12,7 +12,9 @@ import {
     GET_ITEMS_SUCCESS,
     GET_ITEMS_FAILURE,
     ADD_ITEM_SUCCESS,
-    ADD_ITEM_FAILURE
+    ADD_ITEM_FAILURE,
+    MODIFY_ITEM_SUCCESS,
+    MODIFY_ITEM_FAILURE
 } from './types';
 
 // let prefix = 'https://calm-journey-35242.herokuapp.com';
@@ -102,9 +104,9 @@ export const getItems = (listId) => async (dispatch) => {
     }
 }
 
-export const addItem = (listId, name, image, description) => async (dispatch) => {
+export const addItem = (listId, itemObject) => async (dispatch) => {
     // Returns item object of newly added item, empty string if error
-    const request = await axios.post(prefix + '/api/users/lists/' + listId + '/items', { name, image, description });
+    const request = await axios.post(prefix + '/api/users/lists/' + listId + '/items', itemObject);
 
     if (request.data === '') {
         dispatch({
@@ -114,6 +116,23 @@ export const addItem = (listId, name, image, description) => async (dispatch) =>
     } else {
         dispatch({
             type: ADD_ITEM_SUCCESS,
+            payload: request.data
+        })
+    }
+}
+
+export const modifyItem = (listId, itemId, itemObject) => async (dispatch) => {
+    // Returns item object that was modified (previous), empty string if error
+    const request = await axios.put(prefix + '/api/users/lists/' + listId + '/items/' + itemId, itemObject);
+
+    if (request.data === '') {
+        dispatch({
+            type: MODIFY_ITEM_FAILURE,
+            payload: request.data
+        })
+    } else {
+        dispatch({
+            type: MODIFY_ITEM_SUCCESS,
             payload: request.data
         })
     }

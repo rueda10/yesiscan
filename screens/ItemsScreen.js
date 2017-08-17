@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, Button, DeviceEventEmitter } from 'react-native';
+import { View, Button } from 'react-native';
 import { connect } from 'react-redux';
 
-import { getItems } from '../actions';
+import { getItems, modifyItem } from '../actions';
 
-import { Spineer } from '../components/common';
+import ItemList from '../components/ItemList';
+import { Spinner } from '../components/common';
 
 class ItemsScreen extends Component {
     static navigationOptions = ({ navigation, screenProps }) => {
@@ -36,25 +37,48 @@ class ItemsScreen extends Component {
         });
     }
 
-    async componentWillUpdate() {
-        await this.props.getItems(this.props.listsSelection.id);
-        DeviceEventEmitter.addListener('ITEM_CREATED', (e) => {this.forceUpdate()});
+    async componentWillMount() {
+        await this.props.getItems(this.props.list.id);
+    }
+
+    onItemSelected = (list) => {
+        // this.props.selectList(list);
+        // this.props.navigation.navigate('items', { name: list.name });
+    }
+
+    onItemDeleted = async (listId) => {
+        // await this.props.deleteList(this.props.userId, listId);
+    }
+
+    onIncrementItem = async (item) => {
+        if (item.quantity < 100) {
+            await this.props.modifyItem(this.props.list.id, item.id, {quantity: item.quantity + 1});
+        }
+    }
+
+    onDecrementItem = async (item) => {
+        if (item.quantity > 0) {
+            await this.props.modifyItem(this.props.list.id, item.id, {quantity: item.quantity - 1});
+        }
     }
 
     render() {
-        if (!this.props.items) {
+        if (!this.props.items.currentItems) {
             return <Spinner />;
         }
 
-        if (this.props.items.length < 1) {
+        if (this.props.items.currentItems.length < 1) {
             return <View></View>
         }
 
         return (
-            <MyList
-                list={this.props.items}
-                onListSelected={this.onListSelected}
-                onListDeleted={this.onListDeleted}
+            <ItemList
+                items={this.props.items.currentItems}
+                list={this.props.list}
+                onItemSelected={this.onItemSelected}
+                onItemDeleted={this.onItemDeleted}
+                onIncrementItem={this.onIncrementItem}
+                onDecrementItem={this.onDecrementItem}
             />
         )
     }
@@ -67,4 +91,4 @@ function mapStateToProps({ currentList, currentItems }) {
     };
 }
 
-export default connect(mapStateToProps, { getItems })(ItemsScreen);
+export default connect(mapStateToProps, { getItems, modifyItem })(ItemsScreen);
