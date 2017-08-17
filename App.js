@@ -13,6 +13,7 @@ import CreateListScreen from './screens/CreateListScreen';
 import ScanScreen from './screens/ScanScreen';
 import ItemsScreen from './screens/ItemsScreen';
 import CreateItemScreen from './screens/CreateItemScreen';
+import EditItemScreen from './screens/EditItemScreen';
 
 export default class App extends React.Component {
   render() {
@@ -38,6 +39,12 @@ export default class App extends React.Component {
                     },
                     createItem: {
                         screen: CreateItemScreen,
+                        navigationOptions: {
+                            tabBarVisible: false
+                        }
+                    },
+                    editItem: {
+                        screen: EditItemScreen,
                         navigationOptions: {
                             tabBarVisible: false
                         }

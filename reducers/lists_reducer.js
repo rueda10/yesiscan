@@ -9,7 +9,8 @@ import {
 
 export default function(state = [], action) {
     switch(action.type) {
-        case GET_LISTS_SUCCESS: {
+        case GET_LISTS_SUCCESS:
+        case DELETE_LIST_SUCCESS: {
             return { lists: action.payload }
         }
         case GET_LISTS_FAILURE: {
@@ -19,15 +20,8 @@ export default function(state = [], action) {
             const newLists = [ ...state.lists, action.payload ];
             return { lists: newLists }
         }
-        case ADD_LIST_FAILURE: {
-            return state
-        }
-        case DELETE_LIST_SUCCESS: {
-            return { lists: action.payload }
-        }
-        case DELETE_LIST_FAILURE: {
-            return state
-        }
+        case ADD_LIST_FAILURE:
+        case DELETE_LIST_FAILURE:
         default:
             return state
     }

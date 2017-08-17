@@ -51,30 +51,7 @@ class CreateItemScreen extends Component {
         this.setListId = this.setListId.bind(this);
     }
 
-    setItemName(name) {
-        this.setState({
-            name
-        })
-    }
-
-    setItemDescription(description) {
-        this.setState({
-            description
-        })
-    }
-
-    setItemImage(image) {
-        this.setState({
-            image
-        })
-    }
-
-    setListId(listId) {
-        this.setState({
-            listId
-        })
-    }
-
+    // LIFECYCLE METHODS
     componentWillMount() {
         this.setState({
             listId: this.props.list.id
@@ -85,6 +62,16 @@ class CreateItemScreen extends Component {
         this.props.navigation.setParams({ addItem: this.addItem });
     }
 
+    // SETTERS
+    setItemName(name) { this.setState({ name })}
+
+    setItemDescription(description) { this.setState({ description })}
+
+    setItemImage(image) { this.setState({ image })}
+
+    setListId(listId) { this.setState({ listId })}
+
+    // ACTION CREATOR
     async addItem() {
         const itemObject = {
             name: this.state.name,
@@ -95,10 +82,12 @@ class CreateItemScreen extends Component {
         this.props.navigation.goBack();
     }
 
+    // RENDER
     render() {
         return (
             <EditItem
                 currentListId={this.props.list.id}
+                currentItem={{}}
                 setItemName={this.setItemName}
                 setItemDescription={this.setItemDescription}
                 setItemImage={this.setItemImage}
@@ -108,9 +97,9 @@ class CreateItemScreen extends Component {
     }
 }
 
-function mapStateToProps({ currentList }) {
+function mapStateToProps({ current }) {
     return {
-        list: currentList
+        list: current.list
     };
 }
 

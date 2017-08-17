@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Button } from 'react-native';
 import { connect } from 'react-redux';
 
-import { getItems, modifyItem } from '../actions';
+import { getItems, modifyItem, selectItem } from '../actions';
 
 import ItemList from '../components/ItemList';
 import { Spinner } from '../components/common';
@@ -41,9 +41,9 @@ class ItemsScreen extends Component {
         await this.props.getItems(this.props.list.id);
     }
 
-    onItemSelected = (list) => {
-        // this.props.selectList(list);
-        // this.props.navigation.navigate('items', { name: list.name });
+    onItemSelected = (item) => {
+        this.props.selectItem(item);
+        this.props.navigation.navigate('editItem');
     }
 
     onItemDeleted = async (listId) => {
@@ -84,11 +84,11 @@ class ItemsScreen extends Component {
     }
 }
 
-function mapStateToProps({ currentList, currentItems }) {
+function mapStateToProps({ current, currentItems }) {
     return {
-        list: currentList,
+        list: current.list,
         items: currentItems
     };
 }
 
-export default connect(mapStateToProps, { getItems, modifyItem })(ItemsScreen);
+export default connect(mapStateToProps, { getItems, modifyItem, selectItem })(ItemsScreen);

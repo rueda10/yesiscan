@@ -28,9 +28,9 @@ class CreateItemScreen extends Component {
 
         this.state = {
             listId: props.currentListId,
-            name: '',
-            image: '',
-            description: ''
+            name: props.currentItem.name,
+            image: props.currentItem.image,
+            description: props.currentItem.description
         }
 
         this.setItemName = this.setItemName.bind(this);
@@ -148,7 +148,7 @@ class CreateItemScreen extends Component {
                                 />
                             </CardSection>
                             <CardSection>
-                                <Input label="Name:" placeholder="Item Name" onChangeText={this.setItemName} />
+                                <Input label="Name:" value={ this.state.name ? this.state.name : '' } placeholder="Item Name" onChangeText={this.setItemName}/>
                             </CardSection>
                             <CardSection>
                                 <View style={styles.descriptionContainerStyle}>
@@ -160,6 +160,7 @@ class CreateItemScreen extends Component {
                                         blurOnSubmit
                                         onChangeText={this.setItemDescription}
                                         autoCorrect={false}
+                                        value={ this.state.description ? this.state.description : '' }
                                     />
                                 </View>
                             </CardSection>
