@@ -62,10 +62,10 @@ class ItemList extends Component {
                                 </View>
                                 <View style={styles.titleContainerStyle}>
                                     <Text style={styles.titleStyle}>
-                                        { item.name }
+                                        { item.name && (item.name.length > 15) ? item.name.substr(0, 14) + '...' : item.name }
                                     </Text>
                                     <Text style={styles.descriptionStyle}>
-                                        { item.description && (item.description.length > 20) ? item.description.substr(0, 19) + '...' : item.description}
+                                        { item.description && (item.description.length > 20) ? item.description.substr(0, 19) + '...' : item.description }
                                     </Text>
                                 </View>
                                 <View style={styles.quantityContainerStyle}>

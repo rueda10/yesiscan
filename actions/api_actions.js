@@ -14,11 +14,12 @@ import {
     ADD_ITEM_SUCCESS,
     ADD_ITEM_FAILURE,
     MODIFY_ITEM_SUCCESS,
-    MODIFY_ITEM_FAILURE
+    MODIFY_ITEM_FAILURE,
+    GET_SCANNED_ITEM_SUCCESS
 } from './types';
 
-// let prefix = 'https://calm-journey-35242.herokuapp.com';
-let prefix = 'http://localhost:3000';
+let prefix = 'https://calm-journey-35242.herokuapp.com';
+// let prefix = 'http://localhost:3000';
 
 export const addUser = (facebookId) => async (dispatch) => {
     // Returns new user ID if successful, empty string if error
@@ -151,6 +152,17 @@ export const removeItem = (listId, itemId) => async (dispatch) => {
         dispatch({
             type: MODIFY_ITEM_SUCCESS,
             payload: request.data
+        })
+    }
+}
+
+export const getScannedItem = (code) => async (dispatch) => {
+    const request = await axios.get('https://api.upcitemdb.com/prod/trial/lookup?upc=' + code);
+
+    if (request.data) {
+        dispatch({
+            type: GET_SCANNED_ITEM_SUCCESS,
+            payload: request.data.items[0]
         })
     }
 }

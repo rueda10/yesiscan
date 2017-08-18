@@ -14,7 +14,6 @@ const Input = ({ label, value, onChangeText, placeholder, multiline }) => {
                 autoCorrect={false}
                 style={inputStyle}
                 value={value}
-                maxLength={20}
                 onChangeText={onChangeText}
                 blurOnSubmit
             />

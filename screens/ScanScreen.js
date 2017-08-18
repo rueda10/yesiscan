@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 import _ from 'lodash';
 
-import { selectItem } from '../actions';
+import { selectItem, getScannedItem } from '../actions';
 
 class ScanScreen extends Component {
     static navigationOptions = {
@@ -29,22 +29,30 @@ class ScanScreen extends Component {
         this.setState({ hasCameraPermission: status === 'granted'});
     }
 
-    componentDidUpdate() {
-        // alert('2');
-        // this.setState({ scanned: false});
+    async componentWillReceiveProps(nextProps) {
+        if (nextProps.scannedItem.scannedItem) {
+            this.setState({ scanned: false });
+
+            const item = {
+                name: nextProps.scannedItem.scannedItem.title,
+                description: nextProps.scannedItem.scannedItem.description,
+                image: nextProps.scannedItem.scannedItem.images[0]
+            }
+
+            await this.props.selectItem(item);
+            this.props.navigation.navigate('scannedItem');
+        }
     }
 
     _handleBarCodeRead = async (data) => {
         if (!this.state.scanned) {
             this.setState({ scanned: true });
-            const item = {
-                name: 'test'
-            }
-            alert('Item scanned!');
-            await this.props.selectItem(item);
+            await this.props.getScannedItem(data.data);
+
+
+
             // alert(JSON.stringify(data));
-            this.props.navigation.navigate('scannedItem');
-            // this.setState({ scanned: false });
+
         }
     }
 
@@ -141,4 +149,8 @@ const styles = {
     }
 };
 
-export default connect(null, { selectItem })(ScanScreen);
+function mapStateToProps({ scannedItem }) {
+    return { scannedItem };
+}
+
+export default connect(mapStateToProps, { selectItem, getScannedItem })(ScanScreen);

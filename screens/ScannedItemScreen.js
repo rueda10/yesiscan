@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'react-native';
 import { connect } from 'react-redux';
 
-import { modifyItem } from '../actions';
+import { addItem } from '../actions';
 
 import EditItem from '../components/EditItem';
 
@@ -13,7 +13,7 @@ class ScannedItemScreen extends Component {
             headerRight: (
                 <Button
                     title="Save"
-                    onPress={() => {navigation.state.params.modifyItem()}}
+                    onPress={() => {navigation.state.params.addItem()}}
                     backgroundColor="rgba(0,0,0,0)"
                     color="#FCFDFD"
                 />
@@ -37,14 +37,19 @@ class ScannedItemScreen extends Component {
     constructor(props) {
         super(props);
 
+        let listId = '';
+        if (props.lists.lists && props.lists.lists.length > 0) {
+            listId = props.lists.lists[0].id
+        }
+
         this.state = {
-            listId: '',
+            listId,
             name: this.props.item.name,
             image: this.props.item.image,
             description: this.props.item.description
         }
 
-        this.modifyItem = this.modifyItem.bind(this);
+        this.addItem = this.addItem.bind(this);
         this.setItemName = this.setItemName.bind(this);
         this.setItemDescription = this.setItemDescription.bind(this);
         this.setItemImage = this.setItemImage.bind(this);
@@ -53,17 +58,7 @@ class ScannedItemScreen extends Component {
 
     // LIFECYCLE METHODS
     componentDidMount() {
-        this.props.navigation.setParams({ modifyItem: this.modifyItem });
-    }
-
-    async modifyItem() {
-        const itemObject = {
-            name: this.state.name,
-            image: this.state.image,
-            description: this.state.description
-        }
-        await this.props.modifyItem(this.state.listId, this.props.item.id, itemObject);
-        this.props.navigation.navigate('lists');
+        this.props.navigation.setParams({ addItem: this.addItem });
     }
 
     // SETTERS
@@ -76,7 +71,7 @@ class ScannedItemScreen extends Component {
     setListId(listId) { this.setState({ listId })}
 
     // ACTION CREATOR
-    async modifyItem() {
+    async addItem() {
         const itemObject = {
             name: this.state.name,
             image: this.state.image,
@@ -84,14 +79,14 @@ class ScannedItemScreen extends Component {
             listId: this.state.listId
         }
 
-        await this.props.modifyItem(this.state.listId, this.props.item.id, itemObject);
+        await this.props.addItem(this.state.listId, itemObject);
         this.props.navigation.goBack();
     }
 
     render() {
         return (
             <EditItem
-                currentListId={{}}
+                currentListId={this.state.listId}
                 currentItem={this.props.item}
                 setItemName={this.setItemName}
                 setItemDescription={this.setItemDescription}
@@ -102,10 +97,11 @@ class ScannedItemScreen extends Component {
     }
 }
 
-function mapStateToProps({ current }) {
+function mapStateToProps({ current, lists }) {
     return {
-        item: current.item
+        item: current.item,
+        lists: lists
     };
 }
 
-export default connect(mapStateToProps, { modifyItem })(ScannedItemScreen);
+export default connect(mapStateToProps, { addItem })(ScannedItemScreen);
