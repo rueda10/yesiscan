@@ -76,9 +76,10 @@ class CreateItemScreen extends Component {
         const itemObject = {
             name: this.state.name,
             image: this.state.image,
-            description: this.state.description
+            description: this.state.description,
+            listId: this.state.listId
         }
-        await this.props.addItem(this.state.listId, itemObject);
+        await this.props.addItem(this.props.list.id, itemObject);
         this.props.navigation.goBack();
     }
 

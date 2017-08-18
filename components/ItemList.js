@@ -39,7 +39,7 @@ class ItemList extends Component {
             underlayColor: 'rgba(0, 0, 0, 0.6)',
             borderBottomWidth: 1,
             borderColor: '#FCFDFD',
-            onPress: () => { this.props.onItemDeleted(item.id) }
+            onPress: () => { this.props.onItemDeleted(item) }
         }];
 
         if (!item.image) {

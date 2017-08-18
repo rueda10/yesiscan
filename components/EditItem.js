@@ -37,6 +37,7 @@ class CreateItemScreen extends Component {
         this.setItemDescription = this.setItemDescription.bind(this);
         this.handleImagePress = this.handleImagePress.bind(this);
         this.showActionSheet = this.showActionSheet.bind(this);
+        this.handleValueChange = this.handleValueChange.bind(this);
     }
 
     setItemName(name) {

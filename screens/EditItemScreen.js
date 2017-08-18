@@ -39,9 +39,9 @@ class EditItemScreen extends Component {
 
         this.state = {
             listId: this.props.list.id,
-            name: '',
-            image: '',
-            description: ''
+            name: this.props.item.name,
+            image: this.props.item.image,
+            description: this.props.item.description
         }
 
         this.modifyItem = this.modifyItem.bind(this);
@@ -80,9 +80,10 @@ class EditItemScreen extends Component {
         const itemObject = {
             name: this.state.name,
             image: this.state.image,
-            description: this.state.description
+            description: this.state.description,
+            listId: this.state.listId
         }
-        await this.props.modifyItem(this.state.listId, this.props.item.id, itemObject);
+        await this.props.modifyItem(this.props.list.id, this.props.item.id, itemObject);
         this.props.navigation.goBack();
     }
 
