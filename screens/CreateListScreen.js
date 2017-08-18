@@ -24,9 +24,9 @@ class CreateListScreen extends Component {
             },
             headerTintColor: '#FCFDFD',
             headerStyle: {
-                shadowColor: '#FCFDFD',
-                shadowOffset: {width: 0, height: 3},
-                shadowOpacity: 0.3,
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.2,
                 elevation: 2,
                 height: 60,
                 backgroundColor: '#87B6D8'

@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { BarCodeScanner, Permissions } from 'expo';
+import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
+import _ from 'lodash';
+
+import { selectItem } from '../actions';
 
 class ScanScreen extends Component {
     static navigationOptions = {
@@ -11,8 +15,13 @@ class ScanScreen extends Component {
         }
     }
 
-    state = {
-        hasCameraPermission: null
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            hasCameraPermission: null,
+            scanned: false
+        }
     }
 
     async componentWillMount() {
@@ -20,8 +29,23 @@ class ScanScreen extends Component {
         this.setState({ hasCameraPermission: status === 'granted'});
     }
 
-    _handleBarCodeRead = (data) => {
-        alert(JSON.stringify(data));
+    componentDidUpdate() {
+        // alert('2');
+        // this.setState({ scanned: false});
+    }
+
+    _handleBarCodeRead = async (data) => {
+        if (!this.state.scanned) {
+            this.setState({ scanned: true });
+            const item = {
+                name: 'test'
+            }
+            alert('Item scanned!');
+            await this.props.selectItem(item);
+            // alert(JSON.stringify(data));
+            this.props.navigation.navigate('scannedItem');
+            // this.setState({ scanned: false });
+        }
     }
 
     render() {
@@ -35,7 +59,7 @@ class ScanScreen extends Component {
             return (
                 <View style={{flex: 1}}>
                     <BarCodeScanner
-                        onBarCodeRead={this._handleBarCodeRead}
+                        onBarCodeRead={_.debounce(this._handleBarCodeRead, 500, { 'leading': true })}
                         style={StyleSheet.absoluteFill}
                     />
                     <View style={styles.overlayStyle}>
@@ -117,4 +141,4 @@ const styles = {
     }
 };
 
-export default ScanScreen;
+export default connect(null, { selectItem })(ScanScreen);

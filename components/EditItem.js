@@ -6,14 +6,18 @@ import {
     TextInput,
     Text,
     Keyboard,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    TouchableOpacity,
+    Modal
 } from 'react-native';
 import { Picker } from 'react-native-picker-dropdown';
 import { connect } from 'react-redux';
 import { ImagePicker } from 'expo';
 import ActionSheet from 'react-native-actionsheet';
 
-import { Card, CardSection, Input } from '../components/common';
+import { Card, CardSection, Input, Header } from '../components/common';
+
+import { addList } from '../actions';
 
 const CANCEL_INDEX = 0;
 const TAKE_PICTURE_INDEX = 1;
@@ -30,7 +34,9 @@ class CreateItemScreen extends Component {
             listId: props.currentListId,
             name: props.currentItem.name,
             image: props.currentItem.image,
-            description: props.currentItem.description
+            description: props.currentItem.description,
+            modalVisible: false,
+            newListName: ''
         }
 
         this.setItemName = this.setItemName.bind(this);
@@ -38,26 +44,22 @@ class CreateItemScreen extends Component {
         this.handleImagePress = this.handleImagePress.bind(this);
         this.showActionSheet = this.showActionSheet.bind(this);
         this.handleValueChange = this.handleValueChange.bind(this);
+        this.createNewList = this.createNewList.bind(this);
     }
 
+    // SETTERS
     setItemName(name) {
-        this.setState({
-            name
-        });
+        this.setState({ name });
         this.props.setItemName(name);
     }
 
     setItemDescription(description) {
-        this.setState({
-            description
-        });
+        this.setState({ description });
         this.props.setItemDescription(description);
     }
 
-    populatePicker() {
-        return this.props.lists.lists.map(list => {
-            return <Picker.Item key={list.id} label={list.name} value={list.id} />
-        });
+    setModalVisible(visible) {
+        this.setState({ modalVisible: visible })
     }
 
     pickImage = async () => {
@@ -83,10 +85,25 @@ class CreateItemScreen extends Component {
         }
     }
 
+    // HELPERS
+    populatePicker() {
+        return this.props.lists.lists.map(list => {
+            return <Picker.Item key={list.id} label={list.name} value={list.id} />
+        });
+    }
+
     showActionSheet() {
         this.ActionSheet.show();
     }
 
+    createNewList = async () => {
+        if (this.state.newListName && this.state.newListName.length !== 0) {
+            await this.props.addList(this.props.userId, this.state.newListName);
+            this.setModalVisible(!this.state.modalVisible);
+        }
+    }
+
+    // HANDLERS
     handleImagePress(index) {
         if (index === TAKE_PICTURE_INDEX) {
             this.takePicture();
@@ -114,6 +131,7 @@ class CreateItemScreen extends Component {
                         <Card>
                             <CardSection>
                                 <View style={styles.pickerContainerStyle}>
+                                    <Text style={styles.pickerLabelStyle}>List:</Text>
                                     <View style={styles.pickerViewStyle}>
                                         <Picker
                                             style={styles.pickerStyle}
@@ -123,6 +141,39 @@ class CreateItemScreen extends Component {
                                         >
                                             {this.populatePicker()}
                                         </Picker>
+                                    </View>
+                                    <View>
+                                        <TouchableOpacity onPress={() => {this.setModalVisible(true)}} style={styles.newButtonStyle}>
+                                            <Text style={styles.newButtonTextStyle}>
+                                                New
+                                            </Text>
+                                        </TouchableOpacity>
+                                        <Modal
+                                            animationType={'slide'}
+                                            transparent={false}
+                                            visible={this.state.modalVisible}
+                                        >
+                                            <View style={{ flex: 1, alignItems: 'stretch' }}>
+                                                <Header headerText="Create New List" />
+                                                <Card style={styles.newListCardStyle}>
+                                                    <CardSection>
+                                                        <Input label="List Name:" placeholder="List Name" onChangeText={(newListName) => { this.setState({ newListName }) }} />
+                                                    </CardSection>
+                                                    <CardSection>
+                                                        <TouchableOpacity onPress={this.createNewList} style={styles.newListButtonStyle}>
+                                                            <Text style={styles.newListButtonTextStyle}>
+                                                                Create List
+                                                            </Text>
+                                                        </TouchableOpacity>
+                                                        <TouchableOpacity onPress={() => { this.setModalVisible(!this.state.modalVisible) }} style={styles.newListButtonStyle}>
+                                                            <Text style={styles.newListButtonTextStyle}>
+                                                                Cancel
+                                                            </Text>
+                                                        </TouchableOpacity>
+                                                    </CardSection>
+                                                </Card>
+                                            </View>
+                                        </Modal>
                                     </View>
                                 </View>
                             </CardSection>
@@ -179,16 +230,67 @@ const styles = {
     },
     pickerContainerStyle: {
         flex: 1,
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center'
     },
+    pickerLabelStyle: {
+        fontSize: 18,
+        paddingLeft: 5,
+        flex: 1
+    },
     pickerViewStyle: {
+        flex: 4,
         alignSelf: 'stretch'
     },
     pickerStyle: {
         alignSelf: 'stretch',
         fontSize: 18,
+        height: 30,
+        borderColor: '#D9DFDF',
+        borderWidth: 1,
+        paddingLeft: 10,
+        paddingRight: 8
+    },
+    newButtonStyle: {
+        flex: 1,
+        alignSelf: 'stretch',
+        backgroundColor: '#fff',
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#87B6D8',
+        marginLeft: 10,
+        marginRight: 5,
+        width: 50,
+    },
+    newButtonTextStyle: {
+        alignSelf: 'center',
+        color: '#87B6D8',
+        fontSize: 14,
+        fontWeight: '600',
+        paddingTop: 5,
+        paddingBottom: 5
+    },
+    newListButtonStyle: {
+        flex: 1,
+        alignSelf: 'stretch',
+        backgroundColor: '#fff',
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#87B6D8',
+        marginLeft: 10,
+        marginRight: 5,
+        width: 200,
         height: 30
+    },
+    newListButtonTextStyle: {
+        justifyContent: 'center',
+        alignSelf: 'center',
+        color: '#87B6D8',
+        fontSize: 14,
+        fontWeight: '600',
+        paddingTop: 5,
+        paddingBottom: 5
     },
     thumbnailContainerStyle: {
         justifyContent: 'center',
@@ -224,10 +326,11 @@ const styles = {
     }
 }
 
-function mapStateToProps({ lists }) {
+function mapStateToProps({ user, lists }) {
     return {
-        lists: lists
+        lists: lists,
+        userId: user.userId
     };
 }
 
-export default connect(mapStateToProps, null)(CreateItemScreen);
+export default connect(mapStateToProps, { addList })(CreateItemScreen);

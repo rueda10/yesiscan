@@ -73,7 +73,6 @@ export const addList = (userId, name) => async (dispatch) => {
 export const deleteList = (userId, listId) => async (dispatch) => {
     // Returns array of lists without deleted list, empty string if error
     const request = await axios.delete(prefix + '/api/users/' + userId + '/lists/' + listId);
-    console.log('##############################', request.data);
 
     if (request.data === '') {
         dispatch({

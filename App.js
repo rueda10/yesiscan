@@ -14,6 +14,7 @@ import ScanScreen from './screens/ScanScreen';
 import ItemsScreen from './screens/ItemsScreen';
 import CreateItemScreen from './screens/CreateItemScreen';
 import EditItemScreen from './screens/EditItemScreen';
+import ScannedItemScreen from './screens/ScannedItemScreen';
 
 export default class App extends React.Component {
   render() {
@@ -23,7 +24,7 @@ export default class App extends React.Component {
         main: {
           screen: TabNavigator ({
               lists: {
-                screen: StackNavigator({
+                screen: StackNavigator ({
                     listsScreen: { screen: ListsScreen },
                     createList: {
                         screen: CreateListScreen,
@@ -51,7 +52,24 @@ export default class App extends React.Component {
                     }
                 })
               },
-              scan: { screen: ScanScreen }
+              scan: {
+                  screen: StackNavigator ({
+                      scanScreen: {
+                          screen: ScanScreen,
+                          navigationOptions: {
+                              header: null
+                          }
+                      },
+                      scannedItem: {
+                          screen: ScannedItemScreen,
+                          navigationOptions: {
+                              tabBarVisible: false
+                          }
+                      }
+                  }, {
+                      lazy: true
+                  })
+              }
           }, {
               tabBarOptions: {
                   showLabel: false,
