@@ -30,8 +30,10 @@ class CreateItemScreen extends Component {
     constructor(props) {
         super(props);
 
+        const listId = props.newlyCreatedList ? props.newlyCreatedList.id : props.currentListId;
+
         this.state = {
-            listId: props.currentListId,
+            listId,
             name: props.currentItem.name,
             image: props.currentItem.image,
             description: props.currentItem.description,
@@ -87,7 +89,7 @@ class CreateItemScreen extends Component {
 
     // HELPERS
     populatePicker() {
-        return this.props.lists.lists.map(list => {
+        return this.props.lists.map(list => {
             return <Picker.Item key={list.id} label={list.name} value={list.id} />
         });
     }
@@ -99,6 +101,8 @@ class CreateItemScreen extends Component {
     createNewList = async () => {
         if (this.state.newListName && this.state.newListName.length !== 0) {
             await this.props.addList(this.props.userId, this.state.newListName);
+            this.setState({ listId: this.props.newlyCreatedList.id });
+            this.props.setListId(this.props.newlyCreatedList.id);
             this.setModalVisible(!this.state.modalVisible);
         }
     }
@@ -328,8 +332,9 @@ const styles = {
 
 function mapStateToProps({ user, lists }) {
     return {
-        lists: lists,
-        userId: user.userId
+        lists: lists.lists,
+        userId: user.userId,
+        newlyCreatedList: lists.newlyCreatedList
     };
 }
 

@@ -3,7 +3,7 @@ import { View, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 
-import { addUser, getLists, selectList, deleteList } from '../actions';
+import { addUser, getLists, selectList, deleteList, resetNewlyCreatedList } from '../actions';
 
 import MyList from '../components/MyList';
 import { Spinner } from '../components/common';
@@ -46,8 +46,9 @@ class ListsScreen extends Component {
         await this.props.getLists(this.props.userId);
     }
 
-    onListSelected = (list) => {
-        this.props.selectList(list);
+    onListSelected = async (list) => {
+        await this.props.selectList(list);
+        this.props.resetNewlyCreatedList();
         this.props.navigation.navigate('items', { name: list.name });
     }
 
@@ -82,4 +83,4 @@ function mapStateToProps({ auth, user, lists }) {
     };
 }
 
-export default connect(mapStateToProps, { addUser, getLists, selectList, deleteList })(ListsScreen);
+export default connect(mapStateToProps, { addUser, getLists, selectList, deleteList, resetNewlyCreatedList })(ListsScreen);
