@@ -31,7 +31,7 @@ class ScanScreen extends Component {
 
     async componentWillReceiveProps(nextProps) {
         if (nextProps.scannedItem.scannedItem) {
-            this.setState({ scanned: false });
+            // this.setState({ scanned: false }); //
 
             const item = {
                 name: nextProps.scannedItem.scannedItem.title,
@@ -40,7 +40,9 @@ class ScanScreen extends Component {
             }
 
             await this.props.selectItem(item);
-            this.props.navigation.navigate('scannedItem');
+            this.props.navigation.navigate('scannedItem', {
+                onGoBack: () => this.setState({ scanned: false })
+            });
         }
     }
 

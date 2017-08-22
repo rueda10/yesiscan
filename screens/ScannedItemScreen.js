@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'react-native';
+import { Button as ButtonElement } from 'react-native-elements';
 import { connect } from 'react-redux';
 
 import { addItem } from '../actions';
@@ -16,6 +17,16 @@ class ScannedItemScreen extends Component {
                     onPress={() => {navigation.state.params.addItem()}}
                     backgroundColor="rgba(0,0,0,0)"
                     color="#FCFDFD"
+                />
+            ),
+            headerLeft: (
+                <ButtonElement
+                    icon={{ name: 'chevron-left', size: 40, style: { marginLeft: -30, marginRight: -10 } }}
+                    title="Scan"
+                    onPress={() => {navigation.state.params.onGoBack(); navigation.goBack()}}
+                    backgroundColor="rgba(0,0,0,0)"
+                    color="#FCFDFD"
+                    fontSize={18}
                 />
             ),
             headerTitleStyle: {
@@ -80,6 +91,7 @@ class ScannedItemScreen extends Component {
         }
 
         await this.props.addItem(this.state.listId, itemObject);
+        this.props.navigation.state.params.onGoBack();
         this.props.navigation.goBack();
     }
 
