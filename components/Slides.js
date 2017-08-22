@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView, Dimensions, TouchableOpacity, Image, Animated } from 'react-native';
+import { SocialIcon } from 'react-native-elements';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -75,11 +76,13 @@ class Slides extends Component {
                 <View style={styles.dotsStyle}>
                     {this.renderDots()}
                 </View>
-                <TouchableOpacity onPress={this.props.onComplete} style={styles.buttonStyle}>
-                    <Text style={styles.buttonTextStyle}>
-                        START NOW
-                    </Text>
-                </TouchableOpacity>
+                <SocialIcon
+                    title="Sign In With Facebook"
+                    button
+                    raised
+                    type="facebook"
+                    onPress={this.props.onComplete}
+                />
             </View>
         )
     }
@@ -108,7 +111,7 @@ const styles = {
         fontSize: 18,
         textAlign: 'center',
         color: 'black',
-        marginBottom: 140
+        marginBottom: 100
     },
     buttonStyle: {
         marginTop: 40
@@ -127,25 +130,16 @@ const styles = {
     dotsStyle: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginBottom: 110
+        marginBottom: 50
     },
-    buttonStyle: {
+    facebookButtonStyle: {
         position: 'absolute',
         bottom: 0,
         left: 0,
         right: 0,
-        height: 60,
         alignSelf: 'stretch',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#87B6D8',
-        borderTopWidth: 1,
-        borderTopColor: '#D9DFDF'
-    },
-    buttonTextStyle: {
-        color: '#FCFDFD',
-        fontSize: 20,
-        fontWeight: '600'
     }
 };
 

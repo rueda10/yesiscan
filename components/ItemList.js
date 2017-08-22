@@ -74,10 +74,10 @@ class ItemList extends Component {
                                     </Text>
                                 </View>
                                 <View style={styles.quantityButtonStyle}>
-                                    <Icon name="plus" type="font-awesome" size={30} color="#8BCF62" onPress={() => { this.props.onIncrementItem(item) }} />
+                                    <Icon name="plus" type="font-awesome" size={40} color="#8BCF62" onPress={() => { this.props.onIncrementItem(item) }} />
                                 </View>
                                 <View style={styles.quantityButtonStyle}>
-                                    <Icon name="minus" type="font-awesome" size={30} color="#F97C2C" onPress={() => { this.props.onDecrementItem(item) }} />
+                                    <Icon name="minus" type="font-awesome" size={40} color="#F97C2C" onPress={() => { this.props.onDecrementItem(item) }} />
                                 </View>
                             </View>
                         </CardSection>
@@ -118,21 +118,24 @@ const styles = {
     thumbnailContainerStyle: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginRight: 5,
+        marginRight: 2,
+        marginLeft: -10,
         flex: 2
     },
     titleContainerStyle: {
-        flex: 6
+        flex: 6,
+        marginRight: -30
     },
     descriptionStyle: {
-        fontSize: 14,
+        fontSize: 12,
         fontStyle: 'italic',
         color: '#5B5A62'
     },
     quantityContainerStyle: {
-        flex: 1,
+        flex: 2,
         alignItems: 'center',
         justifyContent: 'center',
+        marginRight: -15
     },
     quantityStyle: {
         fontSize: 32,
@@ -142,9 +145,9 @@ const styles = {
     quantityButtonStyle: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginRight: 5,
-        marginLeft: 5,
-        flex: 1
+        marginRight: -20,
+        marginLeft: 0,
+        flex: 2
     }
 }
 
