@@ -57,17 +57,17 @@ class ListsScreen extends Component {
     }
 
     render() {
-        if (!this.props.lists.lists) {
+        if (!this.props.lists) {
             return <Spinner />;
         }
 
-        if (this.props.lists.lists.length < 1) {
+        if (this.props.lists.length < 1) {
             return <View></View>
         }
 
         return (
             <MyList
-                list={this.props.lists.lists}
+                list={this.props.lists}
                 onListSelected={this.onListSelected}
                 onListDeleted={this.onListDeleted}
             />
@@ -79,7 +79,7 @@ function mapStateToProps({ auth, user, lists }) {
     return {
         facebook_id: auth.facebook_id,
         userId: user.userId,
-        lists: lists
+        lists: lists.lists
     };
 }
 

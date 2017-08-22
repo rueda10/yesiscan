@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { ListView, TouchableWithoutFeedback, View, Text } from 'react-native';
-import { CardSection } from './common';
+import { CardSection, Spinner } from './common';
 import Swipeout from 'react-native-swipeout';
+import _ from 'lodash';
 
 class MyList extends Component {
     constructor(props) {
@@ -25,6 +26,10 @@ class MyList extends Component {
     }
 
     renderRow(list) {
+        if (_.isNull(this.props.list)) {
+            return <Spinner />
+        }
+
         let swipeButtons = [{
             text: 'Delete',
             backgroundColor: 'red',
@@ -57,6 +62,7 @@ class MyList extends Component {
                 dataSource={this.state.dataSource}
                 renderRow={this.renderRow}
                 style={styles.listStyle}
+                removeClippedSubviews={false}
             />
         )
     }
