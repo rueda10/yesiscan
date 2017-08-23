@@ -61,6 +61,7 @@ class Slides extends Component {
     render() {
         return (
             <View style={{ flex: 1 }}>
+                <View style={{ backgroundColor: '#002f6c', height: 20 }} />
                 <ScrollView
                     horizontal
                     pagingEnabled

@@ -84,6 +84,7 @@ class CreateItemScreen extends Component {
 
         if (!result.cancelled) {
             this.setState({ image: result.uri });
+            this.props.setItemImage(result.uri);
         }
     }
 
