@@ -99,7 +99,7 @@ class CreateItemScreen extends Component {
     }
 
     createNewList = async () => {
-        if (this.state.newListName && this.state.newListName.length !== 0) {
+        if (this.state.newListName) {
             await this.props.addList(this.props.userId, this.state.newListName);
             this.setState({ listId: this.props.newlyCreatedList.id });
             this.props.setListId(this.props.newlyCreatedList.id);

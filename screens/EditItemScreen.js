@@ -77,14 +77,16 @@ class EditItemScreen extends Component {
 
     // ACTION CREATOR
     async modifyItem() {
-        const itemObject = {
-            name: this.state.name,
-            image: this.state.image,
-            description: this.state.description,
-            listId: this.state.listId
+        if (this.state.name) {
+            const itemObject = {
+                name: this.state.name,
+                image: this.state.image,
+                description: this.state.description,
+                listId: this.state.listId
+            }
+            await this.props.modifyItem(this.props.list.id, this.props.item.id, itemObject);
+            this.props.navigation.goBack();
         }
-        await this.props.modifyItem(this.props.list.id, this.props.item.id, itemObject);
-        this.props.navigation.goBack();
     }
 
     render() {

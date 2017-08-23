@@ -83,16 +83,18 @@ class ScannedItemScreen extends Component {
 
     // ACTION CREATOR
     async addItem() {
-        const itemObject = {
-            name: this.state.name,
-            image: this.state.image,
-            description: this.state.description,
-            listId: this.state.listId
-        }
+        if (this.state.name) {
+            const itemObject = {
+                name: this.state.name,
+                image: this.state.image,
+                description: this.state.description,
+                listId: this.state.listId
+            }
 
-        await this.props.addItem(this.state.listId, itemObject);
-        this.props.navigation.state.params.onGoBack();
-        this.props.navigation.goBack();
+            await this.props.addItem(this.state.listId, itemObject);
+            this.props.navigation.state.params.onGoBack();
+            this.props.navigation.goBack();
+        }
     }
 
     render() {

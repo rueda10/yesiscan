@@ -50,8 +50,10 @@ class CreateListScreen extends Component {
     }
 
     async addList() {
-        await this.props.addList(this.props.userId, this.state.listName);
-        this.props.navigation.goBack();
+        if (this.state.listName) {
+            await this.props.addList(this.props.userId, this.state.listName);
+            this.props.navigation.goBack();
+        }
     }
 
     setListName(listName) {
