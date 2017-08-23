@@ -16,23 +16,23 @@ class ItemsScreen extends Component {
                     title="Add"
                     onPress={() => navigation.navigate('createItem')}
                     backgroundColor="rgba(0,0,0,0)"
-                    color="#FCFDFD"
+                    color="#FFFFFF"
                 />
             ),
             headerTitleStyle: {
                 // title/text
-                color: '#FCFDFD',
+                color: '#FFFFFF',
                 fontSize: 20
             },
-            headerTintColor: '#FCFDFD', // buttons/arrows
+            headerTintColor: '#FFFFFF', // buttons/arrows
             headerStyle: {
                 // header itself
-                shadowColor: '#FCFDFD',
+                shadowColor: '#4f83cc',
                 shadowOffset: { width: 0, height: 3 },
                 shadowOpacity: 0.3,
                 elevation: 2,
                 height: 60,
-                backgroundColor: '#87B6D8'
+                backgroundColor: '#01579b'
             }
         });
     }

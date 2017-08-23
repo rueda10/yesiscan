@@ -104,7 +104,7 @@ const styles = {
     titleStyle: {
         fontSize: 30,
         textAlign: 'center',
-        color: '#F97C2C',
+        color: '#c6a700',
         marginBottom: 20
     },
     textStyle: {

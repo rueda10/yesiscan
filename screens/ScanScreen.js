@@ -125,29 +125,29 @@ const styles = {
         position: 'absolute',
         top: 0,
         left: 0,
-        borderTopColor: '#F97C2C',
-        borderLeftColor: '#F97C2C'
+        borderTopColor: '#fdd835',
+        borderLeftColor: '#fdd835'
     },
     bottomLeftStyle: {
         position: 'absolute',
         bottom: 0,
         left: 0,
-        borderBottomColor: '#F97C2C',
-        borderLeftColor: '#F97C2C'
+        borderBottomColor: '#fdd835',
+        borderLeftColor: '#fdd835'
     },
     topRightStyle: {
         position: 'absolute',
         top: 0,
         right: 0,
-        borderTopColor: '#F97C2C',
-        borderRightColor: '#F97C2C'
+        borderTopColor: '#fdd835',
+        borderRightColor: '#fdd835'
     },
     bottomRightStyle: {
         position: 'absolute',
         bottom: 0,
         right: 0,
-        borderBottomColor: '#F97C2C',
-        borderRightColor: '#F97C2C'
+        borderBottomColor: '#fdd835',
+        borderRightColor: '#fdd835'
     }
 };
 

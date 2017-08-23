@@ -15,21 +15,21 @@ class CreateListScreen extends Component {
                     title="Save"
                     onPress={() => navigation.state.params.addList()}
                     backgroundColor="rgba(0,0,0,0)"
-                    color="#FCFDFD"
+                    color="#FFFFFF"
                 />
             ),
             headerTitleStyle: {
-                color: '#FCFDFD',
+                color: '#FFFFFF',
                 fontSize: 20
             },
-            headerTintColor: '#FCFDFD',
+            headerTintColor: '#FFFFFF',
             headerStyle: {
-                shadowColor: '#000',
+                shadowColor: '#4f83cc',
                 shadowOffset: { width: 0, height: 2 },
                 shadowOpacity: 0.2,
                 elevation: 2,
                 height: 60,
-                backgroundColor: '#87B6D8'
+                backgroundColor: '#01579b'
             }
         });
     }

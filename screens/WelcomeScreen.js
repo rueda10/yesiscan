@@ -13,19 +13,19 @@ const SLIDE_DATA = [
         title: 'Welcome to Yes I Scan!',
         text: 'Keep track of your stuff with Yes I Scan by creating lists of items you own',
         color: '#03A9F4',
-        image: '/Users/rueda10/yesiscan/assets/images/handyman-yesiscan.jpg'
+        image: 'https://s3.us-east-2.amazonaws.com/yesiscan/handyman-yesiscan.jpg'
     },
     {
         title: 'Inventory',
         text: 'Keep lists of products for future reference',
         color: '#009688',
-        image: '/Users/rueda10/yesiscan/assets/images/handyman-inventory.jpg'
+        image: 'https://s3.us-east-2.amazonaws.com/yesiscan/handyman-inventory.jpg'
     },
     {
         title: 'Scan it',
         text: 'Scan products to add them to your lists, or add them manually, whatever is easier',
         color: '#03A9F4',
-        image: '/Users/rueda10/yesiscan/assets/images/handyman-scan.jpg'
+        image: 'https://s3.us-east-2.amazonaws.com/yesiscan/handyman-scan.jpg'
     }
 ];
 

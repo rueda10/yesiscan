@@ -13,12 +13,12 @@ const Header = (props) => {
 
 const styles = {
     viewStyle: {
-        backgroundColor: '#87B6D8',
+        backgroundColor: '#01579b',
         justifyContent: 'center',
         alignItems: 'center',
         height: 60,
         paddingTop: 15,
-        shadowColor: '#000',
+        shadowColor: '#4f83cc',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
         elevation: 2,

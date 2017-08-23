@@ -17,26 +17,27 @@ class ListsScreen extends Component {
                     title="Add"
                     onPress={() => navigation.navigate('createList')}
                     backgroundColor="rgba(0,0,0,0)"
-                    color="#FCFDFD"
+                    color="#FFFFFF"
                 />
             ),
             tabBarIcon: ({ tintColor }) => {
-                return <Icon name="list-ol" type="font-awesome" size={30} color={tintColor} />
+                return <Icon name="home" type="font-awesome" size={30} color={tintColor} />
             },
             headerTitleStyle: {
                 // title/text
-                color: '#FCFDFD',
+                color: '#FFFFFF',
                 fontSize: 20
+                // fontFamily: 'HelveticaNeue-CondensedBold'
             },
-            headerTintColor: '#FCFDFD', // buttons/arrows
+            headerTintColor: '#FFFFFF', // buttons/arrows
             headerStyle: {
                 // header itself
-                shadowColor: '#000',
+                shadowColor: '#4f83cc',
                 shadowOffset: { width: 0, height: 2 },
                 shadowOpacity: 0.2,
                 elevation: 2,
                 height: 60,
-                backgroundColor: '#87B6D8'
+                backgroundColor: '#01579b'
             }
         });
     }
